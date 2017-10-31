@@ -117,10 +117,21 @@ class NerualStyle(object):
                 side_cost = 0.2 * beta * self._layer_style_loss(layer, 's_loss_{}'.format(idx))
                 self.style_loss += side_cost
                 tf.add_to_collection('losses_new', side_cost)
+
+            tv_loss = 0.01 * self._total_variation(self.mix_im)
+            tf.add_to_collection('losses_new', tv_loss)
             # total loss
             self.total_loss = tf.add_n(tf.get_collection('losses_new'), name='result') 
 
             return self.total_loss 
+
+    def _total_variation(self, image):
+        h = tf.cast(tf.shape(image)[1], tf.float32)
+        w = tf.cast(tf.shape(image)[2], tf.float32)
+        var_x = tf.pow(image[:, 1:, :, :] - image[:, :-2, :, :], 2)
+        var_y = tf.pow(image[:, :, 1:, :] - image[:, :, :-2, :], 2)
+        return (var_x + var_y) / (h * w)
+
 
     def _layer_content_loss(self, layer, name='content_loss'):
         """ 
