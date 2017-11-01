@@ -5,7 +5,7 @@ import numpy as np
 import scipy.misc
 import tensorflow as tf
 
-
+from utils import load_image
 from VGG import VGG19_FCN
 
 class NerualStyle(object):
@@ -104,7 +104,7 @@ class NerualStyle(object):
     def _get_loss(self):
         with tf.name_scope('loss'):
             # weight of content and style loss
-            alpha, beta = 5e-4, 1
+            alpha, beta = 0.001, 0.2e6
             # content loss
             self.contant_loss = 0
             for idx, layer in enumerate(self.content_layers):
@@ -114,12 +114,12 @@ class NerualStyle(object):
             # style loss
             self.style_loss = 0
             for idx, layer in enumerate(self.style_layers):
-                side_cost = 0.2 * beta * self._layer_style_loss(layer, 's_loss_{}'.format(idx))
+                side_cost = beta * self._layer_style_loss(layer, 's_loss_{}'.format(idx))
                 self.style_loss += side_cost
                 tf.add_to_collection('losses_new', side_cost)
 
-            self.tv_loss = 0.01 * self._total_variation(self.mix_im)
-            tf.add_to_collection('losses_new', self.tv_loss)
+            tv_loss = 0.1e-7 * self._total_variation(self.mix_im)
+            tf.add_to_collection('losses_new', tv_loss)
             # total loss
             self.total_loss = tf.add_n(tf.get_collection('losses_new'), name='result') 
 
@@ -130,7 +130,7 @@ class NerualStyle(object):
         w = tf.cast(tf.shape(image)[2], tf.float32)
         var_x = tf.pow(image[:, 1:, :-1, :] - image[:, :-1, :-1, :], 2)
         var_y = tf.pow(image[:, :-1, 1:, :] - image[:, :-1, :-1, :], 2)
-        return tf.reduce_sum(var_x + var_y)
+        return tf.reduce_sum(var_x + var_y) 
 
 
     def _layer_content_loss(self, layer, name='content_loss'):
@@ -144,15 +144,19 @@ class NerualStyle(object):
             w = self.c_feats[layer].shape.as_list()[2]
             M = h * w
             mse = tf.reduce_sum(tf.pow((self.c_feats[layer] - self.mix_layer[layer]), 2))
-            return mse / M
+            return mse * 1. / 2
 
     def _layer_style_loss(self, layer, name='style_loss'):
         with tf.name_scope(name):
             N = self.mix_layer[layer].shape.as_list()[-1]
+            h = self.mix_layer[layer].shape.as_list()[1]
+            w = self.mix_layer[layer].shape.as_list()[2]
+            M = h * w
+
             s_G = self.s_feats[layer]
             random_G = self._gram_matrix(self.mix_layer[layer])
             mse = tf.reduce_sum(tf.pow((s_G - random_G), 2))
-            return mse * (1. / (4 * N ** 2))
+            return mse * 1./(4 * N**2 * M**2)
 
     def _gram_matrix(self, layer, name='gram_matrix'):
         with tf.name_scope(name):
@@ -161,26 +165,58 @@ class NerualStyle(object):
             n_filter = layer.shape.as_list()[-1]
 
             flatten_layer = tf.reshape(layer, shape=[-1, n_filter])
-            return tf.matmul(tf.transpose(flatten_layer), flatten_layer) / (h*w)
+            return tf.matmul(tf.transpose(flatten_layer), flatten_layer)
 
     def train_step(self, sess, save_dir):
         global _step
         _step = 0
 
-        def loss_callback(tl, cl, sl, tvl, g_im):
+        def loss_callback(tl, cl, sl, g_im):
             global _step
             if _step % 20 == 0: 
-                print('[{}] total loss: {}, content loss: {}, style loss: {}, total variation loss: {}'.
-                    format(_step, tl, cl, sl, tvl))
+                print('[{}] total loss: {}, c loss: {}, s loss: {}'.
+                    format(_step, tl, cl, sl))
                 scipy.misc.imsave('{}test_{}.png'.format(save_dir, _step), np.squeeze(g_im))
             _step += 1
 
         self._get_loss()
         opt = self._get_optimizer()
-        opt.minimize(sess, fetches=[self.total_loss, self.contant_loss, self.style_loss, self.tv_loss, self.mix_im],
+        opt.minimize(sess, fetches=[self.total_loss, self.contant_loss, self.style_loss, self.mix_im],
             loss_callback=loss_callback)
 
+if __name__ == '__main__':
 
+    VGG_PATH = 'D:\\Qian\\GitHub\\workspace\\VGG\\vgg19.npy'
+    STYLE_PATH = 'D:\\Qian\\GitHub\\workspace\\t\\vangohg.jpg'
+    CONTENT_PATH = 'D:\\Qian\\GitHub\\workspace\\VGG\\sanfrancisco.jpg'
+    SAVE_DIR = 'D:\\Qian\\GitHub\\workspace\\t\\'
+
+    # load style and content images
+    resize = None
+    s_im = load_image(STYLE_PATH, read_channel=3, resize=resize)
+    c_im = load_image(CONTENT_PATH, read_channel=3, resize=resize)
+
+    # init neural style model
+    c_h = c_im.shape[1]
+    c_w = c_im.shape[2]
+    style_trans_model = NerualStyle(pre_train_path=VGG_PATH, im_height=c_h, im_width=c_w)
+    
+    style_trans_model.create_graph()
+
+    config = tf.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.9
+
+    writer = tf.summary.FileWriter(SAVE_DIR)
+    with tf.Session(config=config) as sess:
+
+        initializer = tf.global_variables_initializer()
+        sess.run(initializer,
+            feed_dict = {style_trans_model.c_im: c_im, style_trans_model.s_im: s_im})
+
+        writer.add_graph(sess.graph)
+        style_trans_model.train_step(sess, SAVE_DIR)
+
+    writer.close()
 
 
 
