@@ -1,9 +1,7 @@
 # Neural Style
 
 - TensorFlow implementation of [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) (2015).
-
 - This paper combine the content and style of two different images by using image features extracted from pre-trained CNN (for image classification task).
-
 - The style transfer process proposed in this paper is a optimization process, which minimizes the difference of content and style features between a random noise image and input context and style images.
 
 ## Requirements
