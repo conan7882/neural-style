@@ -18,6 +18,14 @@
 - [Total variation regularization](https://en.wikipedia.org/wiki/Total_variation_denoising) is used to reduce noise in the result image. The weight 0.01 is used.
 - [L-BFGS](https://en.wikipedia.org/wiki/Limited-memory_BFGS) is used for optimization. The maximum iteration is set to be 500, though the result does not change after 200 iterations. 
 
+## TODO
+
+- [x] Style transfer initialized by content image
+- [ ] Tweak hyperparameters for random initialization
+- [ ] Color preserve
+- [ ] Mask transfer
+- [ ] Multiple styles
+
 
 ## Result
 <p align = 'center'>
