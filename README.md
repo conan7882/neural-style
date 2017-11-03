@@ -22,8 +22,6 @@
 
 <p align = 'center'>
 <img src ="nerual_style/fig/cat.png" height="300px" />
-<a href = 'nerual_style/fig/vangohg.jpg'><img src ="nerual_style/fig/van_s.png" height="300px" /></a>
-<img src ="nerual_style/fig/cat_van.png" height="300px" />
 <a href = 'nerual_style/fig/chong.jpg'><img src ="nerual_style/fig/chong_s.png" height="300px" /></a>
 <img src ="nerual_style/fig/cat_chong.png" height="300px" />
 </p>
