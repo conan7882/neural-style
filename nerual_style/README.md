@@ -24,19 +24,23 @@
 - [Total variation regularization](https://en.wikipedia.org/wiki/Total_variation_denoising) is used to reduce noise in the result image.
 
 ## Result
-
-<img src ="fig/cat.png" height="260px" />
-<img src ="fig/van_s.png" height="260px" />
-<img src ="fig/chong_s.png" height="260px" />
-<img src ="fig/la_s.png" height="260px" />
-<img src ="fig/mo_s.png" height="260px" />
-<img src ="fig/scream_s.png" height="260px" />
-
-<img src ="fig/test_520.png" height="260px" />
-<img src ="fig/test_520 4.png" height="260px" />
-<img src ="fig/test_520 2.png" height="260px" />
-<img src ="fig/test_500 2.png" height="260px" />
-<img src ="fig/test_500.png" height="260px" />
+<img src ="fig/cat.png" height="240px" />
+<p align = 'center'>
+<img src ="fig/van_s.png" height="240px" />
+<img src ="fig/chong_s.png" height="240px" />
+<img src ="fig/la_s.png" height="240px" />
+<img src ="fig/mo_s.png" height="240px" />
+<img src ="fig/scream_s.png" height="240px" />
+<img src ="fig/oil_s.png" height="240px" />
+</p>
+<p align = 'center'>
+<img src ="fig/test_520.png" width="240px" />
+<img src ="fig/test_520 4.png" width="240px" />
+<img src ="fig/test_520 2.png" width="240px" />
+<img src ="fig/test_500 2.png" width="240px" />
+<img src ="fig/test_500.png" width="240px" />
+<img src ="fig/test_500 3.png" width="240px" />
+</p>
 
 
 
