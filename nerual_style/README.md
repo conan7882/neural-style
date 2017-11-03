@@ -41,14 +41,7 @@
 <img src ="fig/oil_s.png" height="300px" />
 <img src ="fig/test_500 3.png" height="300px" />
 </p>
-<p align = 'center'>
-<img src ="fig/test_520.png" width="270px" />
-<img src ="fig/test_520 4.png" width="270px" />
-<img src ="fig/test_520 2.png" width="270px" />
-<img src ="fig/test_500 2.png" width="270px" />
-<img src ="fig/test_500.png" width="270px" />
-<img src ="fig/test_500 3.png" width="270px" />
-</p>
+
 
 
 
