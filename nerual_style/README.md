@@ -21,7 +21,7 @@
 ## TODO
 
 - [x] Style transfer initialized by content image
-- [ ] Tweak hyperparameters for random initialization
+- [ ] Tweaking hyperparameters for random initialization
 - [ ] Color preserve
 - [ ] Mask transfer
 - [ ] Multiple styles
