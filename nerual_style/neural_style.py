@@ -187,7 +187,7 @@ class NerualStyle(object):
             g_mat = tf.matmul(tf.transpose(flatten_layer), flatten_layer)
             return g_mat / (h * w)
 
-    def train_step(self, sess, save_dir):
+    def train_step(self, sess, is_save=False, save_dir=None):
         global _step
         _step = 0
 
@@ -198,8 +198,9 @@ class NerualStyle(object):
                       style loss: {}, total variation loss: {}'.
                       format(_step, tl, cl, sl, tvl))
                 g_im = np.clip(g_im, 0, 255).astype(np.uint8)
-                scipy.misc.imsave('{}test_{}.png'.format(save_dir, _step),
-                                  np.squeeze(g_im))
+                if is_save and not save_dir is None:
+                    scipy.misc.imsave('{}test_{}.png'.format(save_dir, _step),
+                                      np.squeeze(g_im))
             _step += 1
 
         self._get_loss()

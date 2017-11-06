@@ -37,6 +37,9 @@ def get_args():
     parser.add_argument('--maxiter', type=int, default=500,
                         help='max number of iterations')
 
+    parser.add_argument('--nsave', action='store_false',
+                        help='save result or not')
+
     return parser.parse_args()
 
 
@@ -95,7 +98,8 @@ if __name__ == '__main__':
     config = tf.ConfigProto()
     config.gpu_options.per_process_gpu_memory_fraction = 0.9
 
-    writer = tf.summary.FileWriter(SAVE_DIR)
+    if not FLAGS.nsave:
+        writer = tf.summary.FileWriter(SAVE_DIR)
     with tf.Session(config=config) as sess:
 
         initializer = tf.global_variables_initializer()
@@ -104,6 +108,6 @@ if __name__ == '__main__':
                             style_trans_model.s_im: s_im})
 
         writer.add_graph(sess.graph)
-        style_trans_model.train_step(sess, SAVE_DIR)
+        style_trans_model.train_step(sess, FLAGS.nsave, SAVE_DIR)
 
     writer.close()
