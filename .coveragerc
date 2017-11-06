@@ -1,0 +1,5 @@
+# .coverage to control coverage.py
+[run]
+omit = 
+    VGG.py
+    uitls.py

@@ -37,7 +37,7 @@ def get_args():
     parser.add_argument('--maxiter', type=int, default=500,
                         help='max number of iterations')
 
-    parser.add_argument('--nsave', action='store_false',
+    parser.add_argument('--nsave', action='store_true',
                         help='save result or not')
 
     return parser.parse_args()
@@ -46,6 +46,7 @@ def get_args():
 if __name__ == '__main__':
 
     FLAGS = get_args()
+    is_save = FLAGS.nsave
 
     # load style and content images
     s_path = os.path.join(STYLE_PATH, FLAGS.style)
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     config = tf.ConfigProto()
     config.gpu_options.per_process_gpu_memory_fraction = 0.9
 
-    if not FLAGS.nsave:
+    if is_save:
         writer = tf.summary.FileWriter(SAVE_DIR)
     with tf.Session(config=config) as sess:
 
@@ -107,7 +108,9 @@ if __name__ == '__main__':
                  feed_dict={style_trans_model.c_im: c_im,
                             style_trans_model.s_im: s_im})
 
-        writer.add_graph(sess.graph)
-        style_trans_model.train_step(sess, FLAGS.nsave, SAVE_DIR)
+        if is_save:
+            writer.add_graph(sess.graph)
+        style_trans_model.train_step(sess, is_save, SAVE_DIR)
 
-    writer.close()
+    if is_save:
+        writer.close()
