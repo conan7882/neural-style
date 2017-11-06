@@ -1,5 +1,7 @@
 # Art Style Transfer
 
+[![Build Status](https://travis-ci.org/conan7882/art_style_transfer_TensorFlow.svg?branch=master)](https://travis-ci.org/conan7882/art_style_transfer_TensorFlow)
+
 - This repository contains implementations of art style transfer algorithms in recent papers.
 - The source code in the repository can be used to demostrate the algorithms as well as test on your own data.
 
