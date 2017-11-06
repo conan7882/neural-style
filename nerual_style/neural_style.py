@@ -198,7 +198,7 @@ class NerualStyle(object):
                       style loss: {}, total variation loss: {}'.
                       format(_step, tl, cl, sl, tvl))
                 g_im = np.clip(g_im, 0, 255).astype(np.uint8)
-                if is_save and not save_dir is None:
+                if is_save and save_dir is not None:
                     scipy.misc.imsave('{}test_{}.png'.format(save_dir, _step),
                                       np.squeeze(g_im))
             _step += 1
