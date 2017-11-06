@@ -1,6 +1,7 @@
 from scipy import misc
 import numpy as np
 
+
 def load_image(im_path, read_channel=None, resize=None):
     # im = cv2.imread(im_path, self._cv_read)
     if read_channel is None:
