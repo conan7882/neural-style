@@ -120,7 +120,7 @@ class NerualStyle(object):
 
     def _get_optimizer(self):
         return tf.contrib.opt.ScipyOptimizerInterface(
-            self.total_loss, method='L-BFGS-B', 
+            self.total_loss, method='L-BFGS-B',
             options={'maxiter': self._max_iter})
 
     def _get_loss(self):
