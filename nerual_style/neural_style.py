@@ -1,6 +1,7 @@
 # File: neural_style.py
 # Author: Qian Ge <geqian1001@gmail.com>
 
+import os
 import numpy as np
 import scipy.misc
 import tensorflow as tf
@@ -16,7 +17,8 @@ class NerualStyle(object):
                  pre_train_path=None,
                  content_weight=5e-4,
                  style_weight=0.2,
-                 variation_weight=0.05
+                 variation_weight=0.05,
+                 max_iter=500
                  ):
         """
         Args:
@@ -32,10 +34,14 @@ class NerualStyle(object):
         self._s_w = style_weight
         self._v_w = variation_weight
 
+        self._max_iter = max_iter
+
         self.layer = {}
 
-        if pre_train_path is None:
-            raise ValueError('pre_train_path can not be None!')
+        # if pre_train_path is None:
+        #     raise ValueError('pre_train_path can not be None!')
+        if not os.path.isdir(pre_train_path):
+            pre_train_path = None
         self._pre_train_path = pre_train_path
 
         self.content_layers = ['conv4_2']
@@ -62,7 +68,11 @@ class NerualStyle(object):
         s_im = self.s_im
 
         # init vgg19 model
-        vgg_model = VGG19_FCN(is_load=True, trainable=False,
+        if self._pre_train_path is None:
+            is_load = False
+        else:
+            is_load = True
+        vgg_model = VGG19_FCN(is_load=is_load, trainable=False,
                               pre_train_path=self._pre_train_path)
 
         # vgg for content image
@@ -110,7 +120,7 @@ class NerualStyle(object):
 
     def _get_optimizer(self):
         return tf.contrib.opt.ScipyOptimizerInterface(
-            self.total_loss, method='L-BFGS-B', options={'maxiter': 500})
+            self.total_loss, method='L-BFGS-B', options={'maxiter': self._max_iter})
 
     def _get_loss(self):
         with tf.name_scope('loss'):

@@ -9,9 +9,9 @@ from utils import load_image
 from neural_style import NerualStyle
 
 VGG_PATH = 'D:\\Qian\\GitHub\\workspace\\VGG\\vgg19.npy'
-STYLE_PATH = 'D:\\Qian\\GitHub\\workspace\\t\\'
-CONTENT_PATH = 'D:\\GoogleDrive_Qian\\GitHub\\workspace\\1\\'
-SAVE_DIR = 'D:\\Qian\\GitHub\\workspace\\t\\'
+STYLE_PATH = ''
+CONTENT_PATH = ''
+SAVE_DIR = 'test_data/'
 
 
 def get_args():
@@ -33,6 +33,9 @@ def get_args():
                         help='weight of content cost')
     parser.add_argument('--wvariation', type=float, default=0.1,
                         help='weight of total variation')
+
+    parser.add_argument('--maxiter', type=int, default=500,
+                        help='max number of iterations')
 
     return parser.parse_args()
 
@@ -84,7 +87,8 @@ if __name__ == '__main__':
                                     im_height=c_h, im_width=c_w,
                                     content_weight=FLAGS.wcontent,
                                     style_weight=FLAGS.wstyle,
-                                    variation_weight=FLAGS.wvariation)
+                                    variation_weight=FLAGS.wvariation,
+                                    max_iter=FLAGS.maxiter)
 
     style_trans_model.create_graph()
 
