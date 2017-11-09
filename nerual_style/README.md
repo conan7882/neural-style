@@ -50,19 +50,19 @@
 
 ## Preparation
 
-1. Setup directories in file *CNN-Visualization/guidedbackpro.py*. 
-    - *`STYLE_PATH`* - directory of style image
-    - *`CONTENT_PATH`* - directory of content image
-    - *`VGG_PATH`* - directory of pre-trained VGG19 parameters
-    - *`SAVE_DIR`* - directory of saving result images
+1. Setup directories in file `main.py`. 
+    - `STYLE_PATH` - directory of style image
+    - `CONTENT_PATH` - directory of content image
+    - `VGG_PATH` - directory of pre-trained VGG19 parameters
+    - `SAVE_DIR` - directory of saving result images
    
 2. Download the pre-trained VGG parameters
-    - Download pre-trained VGG19 model [here](https://github.com/machrisaa/tensorflow-vgg#tensorflow-vgg16-and-vgg19) and put it in *`VGG_PATH`*.
+    - Download pre-trained VGG19 model [here](https://github.com/machrisaa/tensorflow-vgg#tensorflow-vgg16-and-vgg19) and put it in `VGG_PATH`.
 
 
 ## Run Script:
 
-Put style and content images in *`STYLE_PATH`* and  *`CONTENT_PATH`*, just run:
+Put style and content images in `STYLE_PATH` and  `CONTENT_PATH`, just run:
 
 ```
 python main.py --style STYLE_IM_FILE --content CONTENT_IM_FILE --wstyle STYLE_WEIGHT \
@@ -71,7 +71,7 @@ python main.py --style STYLE_IM_FILE --content CONTENT_IM_FILE --wstyle STYLE_WE
 
 - Add ``` --rescale``` to re-scale style image to the size comparable to content image if style image is larger than content image.
 - Use ``` --cscale SIDE``` to re-scale the content image with largest side = SIDE.
--  Result will be saved in *`SAVE_DIR`* every 20 iteraton.
+-  Result will be saved in `SAVE_DIR` every 20 iteraton.
 
 
 
