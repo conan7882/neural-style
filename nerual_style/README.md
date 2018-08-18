@@ -1,8 +1,8 @@
 # Neural Style
 
 - TensorFlow implementation of [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) (2015).
-- This paper combine the content and style of two different images by using image features extracted from pre-trained CNN (for image classification task).
-- The style transfer process proposed in this paper is a optimization process, which minimizes the difference of content and style features between a random noise image and input context and style images.
+- This paper combines the content and style of two different images by using features extracted from a pre-trained CNN (for image classification task).
+- The style transfer process proposed in this paper is a optimization process, which minimizes the difference of content and style features between the output image and input context and style images.
 
 ## Requirements
 - Python 3.3+
@@ -12,12 +12,13 @@
 ## Implementation Details
 
 - VGG19 is used the same as the paper. Content Layer is conv4_2 and style layers are conv1_1, conv2_1, conv3_1, conv4_1 and conv5_1.
-- Both content and style features is normalized based on the size of content and style images, which is inspired by [this implementationn](https://github.com/anishathalye/neural-style). Because I found this is useful especially when the two images have large difference in size.
-- The image is initialized by the content image. This helps to converge to good result faster. 
-- The weights of content and style costs used in this implementation are 5e-4 and 0.2, respectively. Tweaking is needed when other types of normalization and initialization are used. Usually higher content cost weight if initialization from random noise.
-- [Total variation regularizationn](https://en.wikipedia.org/wiki/Total_variation_denoising) is used to reduce noise in the result image. The weight 0.01 is used.
+- Inspired by [this implementationn](https://github.com/anishathalye/neural-style), Both content and style features are normalized based on the size of content and style images, respectively. I found this is useful especially when the two images have large difference in size.
+- The image is initialized by the content image. This helps to obtain to a good result faster. 
+- The weights for content and style costs used in this implementation are 5e-4 and 0.2, respectively. If the image initialized from a random noise, higher content cost weight maybe needed.
+- [Total variation regularization](https://en.wikipedia.org/wiki/Total_variation_denoising) is used to reduce noise in the result image. The weight 0.01 is used for total variation regularization.
 - [L-BFGS](https://en.wikipedia.org/wiki/Limited-memory_BFGS) is used for optimization. The maximum iteration is set to be 500, though the result does not change after 200 iterations. 
 
+<!--
 ## TODO
 
 - [x] Style transfer initialized by content image
@@ -25,6 +26,7 @@
 - [ ] Color preserve
 - [ ] Mask transfer
 - [ ] Multiple styles
+-->
 
 
 ## Result
