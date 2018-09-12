@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# File: utils.py
+# Author: Qian Ge <geqian1001@gmail.com>
+
 from scipy import misc
 import numpy as np
 

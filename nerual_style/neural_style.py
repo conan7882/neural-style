@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # File: neural_style.py
 # Author: Qian Ge <geqian1001@gmail.com>
 

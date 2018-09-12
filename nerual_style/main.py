@@ -1,18 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# File: main.py
+# Author: Qian Ge <geqian1001@gmail.com>
+
 import os
 import argparse
-
+import numpy as np
 from scipy import misc
 import tensorflow as tf
-import numpy as np
 
 from utils import load_image
 from neural_style import NerualStyle
+
 
 VGG_PATH = '../data/VGG/vgg19.npy'
 STYLE_PATH = ''
 CONTENT_PATH = ''
 SAVE_DIR = 'test_data/'
-
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -22,10 +26,9 @@ def get_args():
                         help='content image name')
 
     parser.add_argument('--cscale', type=int, default=0,
-                        help='max side of rescaled content image')
-
+                        help='size of larger side of content image to be rescaled')
     parser.add_argument('--rescale', action='store_true',
-                        help='rescale images to smallest scale')
+                        help='rescale style image to be comparable size of content image')
 
     parser.add_argument('--wstyle', type=float, default=0.2,
                         help='weight of style cost')
@@ -36,17 +39,15 @@ def get_args():
 
     parser.add_argument('--maxiter', type=int, default=500,
                         help='max number of iterations')
-
-    parser.add_argument('--nsave', action='store_true',
+    parser.add_argument('--save', action='store_true',
                         help='save result or not')
 
     return parser.parse_args()
 
-
 if __name__ == '__main__':
 
     FLAGS = get_args()
-    is_save = (not FLAGS.nsave)
+    is_save = FLAGS.save
 
     # load style and content images
     s_path = os.path.join(STYLE_PATH, FLAGS.style)
@@ -54,6 +55,7 @@ if __name__ == '__main__':
     s_im = load_image(s_path, read_channel=3)
     c_im = load_image(c_path, read_channel=3)
 
+    # rescale content image
     if FLAGS.cscale > 0:
         c_shape = list(map(float, c_im.shape[1:3]))
         if c_shape[0] > c_shape[1]:
@@ -68,6 +70,7 @@ if __name__ == '__main__':
                  int(FLAGS.cscale)))
         c_im = np.expand_dims(c_im, axis=0)
 
+    # rescale style image to the size comparable to content image
     if FLAGS.rescale:
         s_shape = list(map(float, s_im.shape[1:3]))
         c_shape = list(map(float, c_im.shape[1:3]))
@@ -95,14 +98,12 @@ if __name__ == '__main__':
                                     max_iter=FLAGS.maxiter)
 
     style_trans_model.create_graph()
+    if is_save:
+        writer = tf.summary.FileWriter(SAVE_DIR)
 
     config = tf.ConfigProto()
     config.gpu_options.per_process_gpu_memory_fraction = 0.9
-
-    if is_save:
-        writer = tf.summary.FileWriter(SAVE_DIR)
     with tf.Session(config=config) as sess:
-
         initializer = tf.global_variables_initializer()
         sess.run(initializer,
                  feed_dict={style_trans_model.c_im: c_im,

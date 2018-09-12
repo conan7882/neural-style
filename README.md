@@ -72,15 +72,15 @@ python main.py --nsave --style STYLE_IM_FILE --content CONTENT_IM_FILE
 -  Result will be saved in `SAVE_DIR` every 20 iteraton.
 
 ### Argument
-* `--style`: Path of style image.
-* `--content`: Path of content image.
-* `--cscale`: Rescale content image with maximum size to be `cscale` if `cscale` > 0. Default: `0`.
+* `--style`: Name of style image.
+* `--content`: Name of content image.
+* `--cscale`: Rescale content image with larger side to be `cscale` if `cscale` > 0. Default: `0`.
 * `--rescale`: Whether rescale the style image to the size comparable to the content image or not if the style image is larger than the content image in width or height. Default: `False`.
 * `--wstyle`: Weight of style cost for optimization. Default: `0.2`.
 * `--wcontent`: Weight of content cost for optimization. Default: `5e-4`.
 * `--wvariation`: Weight of total variation for optimization. Default: `0.1`.
 * `--maxiter`: Maximum number of iterations. Default: `500`.
-* `--nsave`: Whether save the result or not. Default: `False`.
+* `--save`: Whether save the result or not. Default: `False`.
 
 
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # File: VGG.py
 # Author: Qian Ge <geqian1001@gmail.com>
 
