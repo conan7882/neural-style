@@ -10,7 +10,7 @@ install:
 script:
   - flake8 . --ignore=F405,F403
   # - python nerual_style/main.py --style test_data/vangogh.jpg --content test_data/cat.png --maxiter 1 --cscale 100 --rescale --nsave
-  - coverage run --source=. --omit=*VGG.py,*utils.py nerual_style/main.py --style test_data/vangogh.jpg --content test_data/cat.png --maxiter 1 --cscale 100 --rescale --nsave
+  - coverage run --source=. --omit=*VGG.py,*utils.py nerual_style/main.py --style test_data/vangogh.jpg --content test_data/cat.png --maxiter 1 --cscale 100 --rescale --save
   # - python generate.py cv.yaml --markdown
   # - coverage run --source=. generate.py cv.yaml --markdown
 after_success:
