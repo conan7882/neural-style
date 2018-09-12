@@ -8,7 +8,7 @@ import numpy as np
 from utils import load_image
 from neural_style import NerualStyle
 
-VGG_PATH = 'D:\\Qian\\GitHub\\workspace\\VGG\\vgg19.npy'
+VGG_PATH = '../data/VGG/vgg19.npy'
 STYLE_PATH = ''
 CONTENT_PATH = ''
 SAVE_DIR = 'test_data/'
