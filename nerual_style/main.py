@@ -46,7 +46,7 @@ def get_args():
 if __name__ == '__main__':
 
     FLAGS = get_args()
-    is_save = FLAGS.nsave
+    is_save = (not FLAGS.nsave)
 
     # load style and content images
     s_path = os.path.join(STYLE_PATH, FLAGS.style)
