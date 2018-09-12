@@ -1,5 +1,8 @@
 # Neural Style
 
+[![Build Status](https://travis-ci.org/conan7882/neural-style-tf.svg?branch=master)](https://travis-ci.org/conan7882/neural-style-tf.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/conan7882/art_style_transfer_TensorFlow/badge.svg?branch=master)](https://coveralls.io/github/conan7882/art_style_transfer_TensorFlow?branch=master)
+
 - TensorFlow implementation of [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) (2015).
 - This paper combines the content and style of two different images by matching features extracted from a pre-trained CNN (for image classification task).
 - The style transfer process proposed in this paper is an optimization process, which minimizes the difference of content and style features between the output image and input context and style images.
