@@ -18,6 +18,7 @@ STYLE_PATH = ''
 CONTENT_PATH = ''
 SAVE_DIR = 'test_data/'
 
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--style', type=str, required=True,
