@@ -13,10 +13,10 @@ from utils import load_image
 from neural_style import NerualStyle
 
 
-VGG_PATH = '../data/VGG/vgg19.npy'
-STYLE_PATH = ''
-CONTENT_PATH = ''
-SAVE_DIR = 'test_data/'
+VGG_PATH = '/home/qge2/workspace/data/pretrain/vgg/vgg19.npy'
+STYLE_PATH = '../test_data/'
+CONTENT_PATH = '../test_data/'
+SAVE_DIR = '../test_data/'
 
 
 def get_args():

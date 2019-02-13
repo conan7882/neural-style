@@ -42,8 +42,8 @@ class NerualStyle(object):
 
         # if pre_train_path is None:
         #     raise ValueError('pre_train_path can not be None!')
-        if not os.path.isdir(pre_train_path):
-            pre_train_path = None
+        # if not os.path.isdir(pre_train_path):
+        #     pre_train_path = None
         self._pre_train_path = pre_train_path
 
         self.content_layers = ['conv4_2']
