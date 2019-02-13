@@ -70,7 +70,7 @@
 Put style and content images in `STYLE_PATH` and  `CONTENT_PATH`, then run:
 
 ```
-python main.py --nsave --style STYLE_IM_FILE --content CONTENT_IM_FILE
+python main.py --save --style STYLE_IM_FILE --content CONTENT_IM_FILE
 ```	
 -  Result will be saved in `SAVE_DIR` every 20 iteraton.
 
